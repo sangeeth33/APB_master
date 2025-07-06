@@ -30,3 +30,20 @@ Includes a SystemVerilog testbench and a UVM-based test suite with:
 - Delayed `PREADY`, error injection, and corner-case tests
 - Scoreboard and monitor for protocol validation
 
+Top 10 test cases
+
+| 🧪 **Test Name**                  | 🎯 **Purpose**                                                | ✅ **Expected Outcome**                                        |
+|----------------------------------|---------------------------------------------------------------|----------------------------------------------------------------|
+| `apb_write_test`                | Perform a valid write to address                              | Value is stored correctly in slave memory                      |
+| `apb_read_test`                 | Read from a location previously written                       | Master receives correct `PRDATA`                              |
+| `apb_unwritten_read_test`       | Read from an address that hasn't been written to              | Slave returns default/zero or undefined data                  |
+| `apb_b2b_write_test`            | Multiple consecutive writes                                   | All addresses updated correctly in slave                      |
+| `apb_b2b_read_test`             | Multiple consecutive reads from valid locations               | Returned data matches memory contents                         |
+| `apb_pready_delay_test`         | Insert wait cycles before `PREADY` is asserted                | Master waits and resumes without timing violations            |
+| `apb_pslverr_test`              | Simulate slave error response via `PSLVERR`                   | Master terminates transaction or reports error                |
+| `apb_invalid_address_test`      | Access address beyond valid memory map                        | Slave ignores or flags error; system remains stable           |
+| `apb_mixed_rw_test`            | Alternate between write and read operations                   | Each transaction is isolated and behaves correctly            |
+| `apb_reset_mid_transfer_test`   | Assert reset during active transfer                           | Master FSM recovers cleanly; no hanging `PSEL`/`PENABLE`      |
+
+---
+
